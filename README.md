@@ -8,8 +8,9 @@ Rails動かす用のDocker環境です
 2. `cd YOUR_PROJECT_NAME`
 3. `cp env-example .env`
 4. .envに値を書き込む
-5. railsのプロジェクトをディレクトリルートに配置します
+5. `mkdir YOUR_PROJECT_NAME
 6. `docker-compose up -d`
+7. `make build`
 
 ## Special Thanks!
 
