@@ -4,7 +4,7 @@ services:
   web:
     build: web
     ports:
-      - "3000:3000"
+      - "${RUBY_PORT}:3000"
     environment:
       - "DATABASE_HOST=db"
       - "DATABASE_PORT=5432"
@@ -19,7 +19,7 @@ services:
   db:
     image: postgres:10.1
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     environment:
       - "POSTGRES_USER=postgres"
       - "POSTGRES_PASSWORD=mysecretpassword1234"
