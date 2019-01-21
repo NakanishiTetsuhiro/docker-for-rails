@@ -1,10 +1,10 @@
-build:
-	docker-compose exec web rails new . -d postgresql --skip-bundle
-	# docker-compose exec web bundle install --path vendor/bundle
-	# --without productionオプションを追加すると，本番用のgemはローカル環境にインストールはされない．
-	# docker-compose exec web bundle install --without production
-	docker-compose exec web bundle install
+init:
+	docker-compose exec web rails new . -d postgresql --skip-bundle --skip-coffee --skip-turbolinks --skip-sprockets
+	docker-compose exec web bundle install --without production
+
+init-db:
 	docker-compose exec web bundle exec rails db:create
+	docker-compose exec web bundle exec rails db:migrate
 
 bi:
 	docker-compose exec web bundle install
@@ -17,3 +17,4 @@ s:
 
 controller:
 	docker-compose exec web bundle exec rails generate controller ${name}
+
