@@ -18,3 +18,6 @@ s:
 controller:
 	docker-compose exec web bundle exec rails generate controller ${name}
 
+console:
+	docker-compose exec web rails console
+
