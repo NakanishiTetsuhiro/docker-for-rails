@@ -2,9 +2,12 @@ init:
 	docker-compose exec web rails new . -d postgresql --skip-bundle --skip-coffee --skip-turbolinks --skip-sprockets
 	docker-compose exec web bundle install --without production
 
-init-db:
+initdb:
 	docker-compose exec web bundle exec rails db:create
 	docker-compose exec web bundle exec rails db:migrate
+
+resetdb:
+	docker-compose exec web bundle exec rails db:migrate:reset
 
 bi:
 	docker-compose exec web bundle install
