@@ -8,8 +8,8 @@ services:
     environment:
       - "DATABASE_HOST=db"
       - "DATABASE_PORT=5432"
-      - "DATABASE_USER=postgres"
-      - "DATABASE_PASSWORD=mysecretpassword1234"
+      - "DATABASE_USER=${POSTGRES_USER}"
+      - "DATABASE_PASSWORD=${POSTGRES_PASSWORD}"
     links:
       - db
     volumes:
@@ -17,9 +17,9 @@ services:
     stdin_open: true
 
   db:
-    image: postgres:10.1
+    image: postgres:latest
     ports:
       - "${DB_PORT}:5432"
     environment:
-      - "POSTGRES_USER=postgres"
-      - "POSTGRES_PASSWORD=mysecretpassword1234"
+      - "POSTGRES_USER=${POSTGRES_USER}"
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
