@@ -23,3 +23,17 @@ services:
     environment:
       - "POSTGRES_USER=${POSTGRES_USER}"
       - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+  yarn:
+    build:
+      context: ./yarn
+    volumes:
+      - ./${PROJECT_NAME}:/app:cached
+      - node-modules-volume:/app/node_modules
+  mailhog:
+    build:
+      context: ./mailhog
+    ports:
+      - "${SMTP_PORT}:1025"
+      - "${HTTP_PORT}:8025"
+volumes:
+  node-modules-volume:

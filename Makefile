@@ -24,3 +24,12 @@ controller:
 console:
 	docker-compose exec web rails console
 
+
+yarn-install:
+	docker-compose run --rm yarn install
+
+yarn-dev: ## Entry for yarn command
+	docker-compose run --rm yarn run dev
+
+yarn-watch: ## Run yarn watch
+	docker-compose run --rm yarn run watch
