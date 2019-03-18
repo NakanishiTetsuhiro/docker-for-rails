@@ -8,9 +8,13 @@ Rails動かす用のDocker環境です
 2. `cd YOUR_PROJECT_NAME`
 3. `cp env-example .env`
 4. .envに値を書き込む
-5. `mkdir YOUR_PROJECT_NAME
-6. `docker-compose up -d`
-7. `make build`
+5. railsプロジェクトをcloneしてきて、ディレクトリ名をappに変更
+6. `docker-compose build`
+7. `docker-compose run --rm yarn install`
+8. `docker-compose run --rm yarn run dev`
+9. `docker-compose run --rm web bundle exec rails db:create`
+10. `docker-compose run --rm web bundle exec rails db:migrate`
+11. `docker-compose up -d`
 
 ## Special Thanks!
 

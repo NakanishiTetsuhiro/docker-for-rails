@@ -1,6 +1,9 @@
-init:
-	docker-compose run --rm web rails new . -d postgresql --skip-bundle --skip-coffee --skip-turbolinks --skip-sprockets
-	docker-compose run --rm web bundle install --without production
+.DEFAULT_GOAL := help
+
+build: ## build develoment environment
+	docker-compose run --rm web bundle install
+	docker-compose run --rm yarn install
+	docker-compose run --rm yarn run dev
 
 initdb:
 	docker-compose run --rm web bundle exec rails db:create
@@ -9,26 +12,30 @@ initdb:
 resetdb:
 	docker-compose run --rm web bundle exec rails db:migrate:reset
 
-bi:
+serve: up attach ## Run Serve
+
+up: ## Run web container
+	docker-compose up -d web
+
+console: ## Run Rails Console
+	docker-compose run --rm web bundle exec rails c
+
+bundle: ## Run bundle install
 	docker-compose run --rm web bundle install
 
-migrate:
-	docker-compose run --rm web bundle exec rails db:migrate
+attach: ## Attach running web container for binding.pry
+	docker attach `docker ps -f name=rails-laravel-mix_web -f status=running --format "{{.ID}}"`
 
-s:
-	docker-compose run --rm web rails s -b 0.0.0.0
-
-controller:
-	docker-compose run --rm web bundle exec rails generate controller ${name}
-
-console:
-	docker-compose run --rm web rails console
-
-yarn-install:
+yarn_install: ## Run yarn install
 	docker-compose run --rm yarn install
 
-yarn-dev: ## Entry for yarn command
+yarn_dev: ## Run yarn run dev
 	docker-compose run --rm yarn run dev
 
-yarn-watch: ## Run yarn watch
+yarn_watch: ## Run yarn watch
 	docker-compose run --rm yarn run watch
+
+.PHONY: help
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
