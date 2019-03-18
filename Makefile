@@ -14,6 +14,9 @@ resetdb:
 
 serve: up attach ## Run Serve
 
+fixture:
+	docker-compose run --rm web bundle exec rails db:fixtures:load
+
 up: ## Run web container
 	docker-compose up -d web
 
