@@ -1,29 +1,28 @@
 init:
-	docker-compose exec web rails new . -d postgresql --skip-bundle --skip-coffee --skip-turbolinks --skip-sprockets
-	docker-compose exec web bundle install --without production
+	docker-compose run --rm web rails new . -d postgresql --skip-bundle --skip-coffee --skip-turbolinks --skip-sprockets
+	docker-compose run --rm web bundle install --without production
 
 initdb:
-	docker-compose exec web bundle exec rails db:create
-	docker-compose exec web bundle exec rails db:migrate
+	docker-compose run --rm web bundle exec rails db:create
+	docker-compose run --rm web bundle exec rails db:migrate
 
 resetdb:
-	docker-compose exec web bundle exec rails db:migrate:reset
+	docker-compose run --rm web bundle exec rails db:migrate:reset
 
 bi:
-	docker-compose exec web bundle install
+	docker-compose run --rm web bundle install
 
 migrate:
-	docker-compose exec web bundle exec rails db:migrate
+	docker-compose run --rm web bundle exec rails db:migrate
 
 s:
-	docker-compose exec web rails s -b 0.0.0.0
+	docker-compose run --rm web rails s -b 0.0.0.0
 
 controller:
-	docker-compose exec web bundle exec rails generate controller ${name}
+	docker-compose run --rm web bundle exec rails generate controller ${name}
 
 console:
-	docker-compose exec web rails console
-
+	docker-compose run --rm web rails console
 
 yarn-install:
 	docker-compose run --rm yarn install
