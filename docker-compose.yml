@@ -33,7 +33,7 @@ services:
     build:
       context: ./yarn
     volumes:
-      - ./app:/app:cached
+      - ./${PROJECT_NAME}:/app:cached
       - node-modules-volume:/app/node_modules
   mailhog:
     build:
