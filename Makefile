@@ -1,13 +1,17 @@
 .DEFAULT_GOAL := help
 
-build: ## build develoment environment
-	docker-compose run --rm web bundle install
-	docker-compose run --rm yarn install
-	docker-compose run --rm yarn run dev
+init:
+	docker-compose run --rm web rails new . -d postgresql --skip-bundle --skip-coffee --skip-turbolinks --skip-sprockets
+	docker-compose run --rm web bundle install --without production
+	docker-compose run --rm web bundle exec rails db:create
+	docker-compose run --rm web bundle exec rails db:migrate
 
 initdb:
 	docker-compose run --rm web bundle exec rails db:create
 	docker-compose run --rm web bundle exec rails db:migrate
+
+bundle-install:
+	docker-compose run --rm web bundle install
 
 resetdb:
 	docker-compose run --rm web bundle exec rails db:migrate:reset
@@ -22,9 +26,6 @@ up: ## Run web container
 
 console: ## Run Rails Console
 	docker-compose run --rm web bundle exec rails c
-
-bundle: ## Run bundle install
-	docker-compose run --rm web bundle install
 
 attach: ## Attach running web container for binding.pry
 	docker attach `docker ps -f name=rails-laravel-mix_web -f status=running --format "{{.ID}}"`
